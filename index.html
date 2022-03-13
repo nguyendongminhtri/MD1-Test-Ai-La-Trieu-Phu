@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="Millionaire.js"></script>
+</head>
+<body>
+<button id="play" onclick="startGame()">Start Game</button>
+<h1 id="status"></h1>
+<table>
+    <tr>
+        <td><h1 id="question">Question</h1></td>
+    </tr>
+    <tr>
+        <td><h1>A: </h1>
+            <button onclick="answer(this.id)" id="answer1"></button>
+        </td>
+        <td><h1>B: </h1>
+            <button onclick="answer(this.id)" id="answer2"></button>
+        </td>
+    </tr>
+    <tr>
+        <td><h1>C: </h1>
+            <button onclick="answer(this.id)" id="answer3"></button>
+        </td>
+        <td><h1>D: </h1>
+            <button onclick="answer(this.id)" id="answer4"></button>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
+<script>
+    let million1 = new Millionaire('1+ 1 = ', '2', '3', '4', '0', 'answer1')
+    let millionaire2 = new Millionaire('2+2 = ', '2', '3', '4', '5', 'answer2')
+    let round = 0;
+
+    function startGame() {
+        round++;
+        let audio = new Audio('audio/start.mp3')
+        audio.play();
+        document.getElementById('status').innerHTML = 'Câu hỏi số: ' + round
+        if (round == 1) {
+            document.getElementById('question').innerHTML = million1.question;
+            document.getElementById('answer1').innerHTML = million1.answer1;
+            document.getElementById('answer2').innerHTML = million1.answer2;
+            document.getElementById('answer3').innerHTML = million1.answer3;
+            document.getElementById('answer4').innerHTML = million1.answer2;
+        }
+        if (round == 2) {
+            document.getElementById('question').innerHTML = millionaire2.question;
+            document.getElementById('answer1').innerHTML = millionaire2.answer1;
+            document.getElementById('answer2').innerHTML = millionaire2.answer2;
+            document.getElementById('answer3').innerHTML = millionaire2.answer3;
+            document.getElementById('answer4').innerHTML = millionaire2.answer2;
+        }
+    }
+
+    function answer(id) {
+        let nextRound = round + 1;
+        if (round == 1) {
+            if (id === million1.checkAnswer) {
+                document.getElementById('play').innerHTML = 'Xin mời bạn đến với câu hỏi số: ' + nextRound;
+                document.getElementById('status').innerHTML = 'Chúc mừng bạn đã trả lời đúng'
+            } else {
+                round = 0;
+                document.getElementById('play').innerHTML = 'Play Again!'
+                document.getElementById('status').innerHTML = 'Bạn trả lời sai và đã bị loại'
+            }
+        }
+        if (round == 2) {
+            if (id === millionaire2.checkAnswer) {
+                document.getElementById('play').innerHTML = 'Xin mời bạn đến với câu hỏi số: ' + nextRound;
+                document.getElementById('status').innerHTML = 'Chúc mừng bạn đã trả lời đúng'
+            } else {
+                round = 0;
+                document.getElementById('play').innerHTML = 'Play Again!'
+                document.getElementById('status').innerHTML = 'Bạn trả lời sai và đã bị loại'
+            }
+        }
+    }
+</script>
